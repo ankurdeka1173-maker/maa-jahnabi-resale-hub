@@ -1,0 +1,1804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#155eef">
+  <meta name="description" content="Shop quality pre-owned electronics at MAA JAHNABI RESALE HUB. Explore phones, laptops and more.">
+  <title>MAA JAHNABI RESALE HUB | Smart Deals on Electronics</title>
+
+  <style>
+    :root {
+      --blue: #155eef;
+      --dark: #101828;
+      --muted: #667085;
+      --bg: #f5f7fb;
+      --border: #e4e7ec;
+      --white: #fff;
+      --green: #07885b;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--dark);
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; }
+
+    .top-strip {
+      background: #102a56;
+      color: white;
+      text-align: center;
+      padding: 9px 12px;
+      font-size: 12px;
+    }
+
+    .header {
+      background: white;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 2px 12px #1018280b;
+    }
+
+    .header-inner {
+      max-width: 1200px;
+      margin: auto;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 210px;
+    }
+
+    .brand-logo {
+      background: var(--blue);
+      color: white;
+      width: 43px;
+      height: 43px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 20px;
+    }
+
+    .brand-name {
+      font-weight: 800;
+      font-size: 15px;
+      line-height: 1.35;
+    }
+
+    .brand-name span {
+      display: block;
+      color: var(--blue);
+      font-size: 11px;
+      letter-spacing: 1.6px;
+    }
+
+    .search {
+      flex: 1;
+      display: flex;
+      background: #f2f4f7;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .search input {
+      width: 100%;
+      min-width: 0;
+      border: 0;
+      outline: none;
+      padding: 13px;
+      background: transparent;
+    }
+
+    .search button {
+      border: 0;
+      background: var(--blue);
+      color: white;
+      padding: 0 18px;
+      cursor: pointer;
+    }
+
+    .header-links {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .login-link { color: var(--blue); white-space: nowrap; }
+
+    .register-link {
+      color: white;
+      background: var(--blue);
+      padding: 12px 15px;
+      border-radius: 9px;
+      white-space: nowrap;
+    }
+
+    .categories {
+      background: white;
+      border-top: 1px solid #f0f1f3;
+    }
+
+    .category-inner {
+      max-width: 1200px;
+      margin: auto;
+      padding: 12px 20px;
+      display: flex;
+      gap: 26px;
+      overflow-x: auto;
+      white-space: nowrap;
+      font-size: 13px;
+      color: #475467;
+    }
+
+    .category-inner a:hover { color: var(--blue); }
+
+    main {
+      max-width: 1200px;
+      margin: auto;
+      padding: 26px 20px 50px;
+    }
+
+    .hero {
+      background: linear-gradient(120deg, #102a56, #155eef 70%, #4388ff);
+      color: white;
+      border-radius: 20px;
+      padding: 48px;
+      display: grid;
+      grid-template-columns: 1.3fr 0.7fr;
+      gap: 20px;
+      align-items: center;
+      overflow: hidden;
+      min-height: 320px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 7px 11px;
+      background: #ffffff1c;
+      border: 1px solid #ffffff38;
+      border-radius: 30px;
+      font-size: 12px;
+      margin-bottom: 15px;
+    }
+
+    .hero h1 {
+      font-size: clamp(30px, 4vw, 46px);
+      line-height: 1.12;
+      margin: 0 0 15px;
+      letter-spacing: -1.4px;
+    }
+
+    .hero p {
+      color: #e0eaff;
+      line-height: 1.7;
+      max-width: 490px;
+      margin: 0 0 25px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 0;
+      border-radius: 9px;
+      padding: 13px 18px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .15s, background .15s;
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+
+    .btn-white { background: white; color: var(--blue); }
+    .btn-outline { color: white; border: 1px solid #ffffff75; }
+
+    .hero-art {
+      font-size: 112px;
+      text-align: center;
+      filter: drop-shadow(0 15px 20px #06173550);
+    }
+
+    .benefits {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin: 22px 0 40px;
+    }
+
+    .benefit {
+      background: white;
+      padding: 18px;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      display: flex;
+      align-items: center;
+      gap: 13px;
+    }
+
+    .benefit-icon {
+      width: 43px;
+      height: 43px;
+      flex-shrink: 0;
+      background: #eef4ff;
+      display: grid;
+      place-items: center;
+      border-radius: 11px;
+      font-size: 21px;
+    }
+
+    .benefit strong { display: block; font-size: 13px; margin-bottom: 5px; }
+    .benefit small { color: var(--muted); font-size: 12px; line-height: 1.5; }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .section-head h2 {
+      font-size: 25px;
+      margin: 0 0 7px;
+      letter-spacing: -.6px;
+    }
+
+    .section-head p { color: var(--muted); font-size: 13px; margin: 0; }
+
+    .product-count { font-size: 12px; color: var(--muted); }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .product-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      transition: box-shadow .2s, transform .2s;
+      min-width: 0;
+    }
+
+    .product-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 28px #10182812;
+    }
+
+    .product-image {
+      height: 190px;
+      background: #f2f5fa;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .product-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 12px;
+    }
+
+    .product-placeholder { font-size: 57px; }
+
+    .used-tag {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: #e8f7ef;
+      color: #067647;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 6px 8px;
+      border-radius: 6px;
+    }
+
+    .product-info { padding: 16px; }
+
+    .product-info h3 {
+      font-size: 15px;
+      margin: 0 0 8px;
+      line-height: 1.4;
+      overflow-wrap: anywhere;
+    }
+
+    .description {
+      font-size: 12px;
+      line-height: 1.6;
+      color: var(--muted);
+      min-height: 38px;
+      margin: 0 0 12px;
+      overflow-wrap: anywhere;
+    }
+
+    .price {
+      color: var(--dark);
+      font-weight: 800;
+      font-size: 21px;
+      margin-bottom: 10px;
+    }
+
+    .stock {
+      font-size: 11px;
+      color: var(--green);
+      margin-bottom: 14px;
+    }
+
+    .stock.out { color: #b42318; }
+
+    .buy-btn {
+      display: block;
+      width: 100%;
+      text-align: center;
+      background: var(--blue);
+      color: white;
+      border-radius: 8px;
+      padding: 12px 8px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .buy-btn.disabled {
+      background: #d0d5dd;
+      color: #475467;
+      pointer-events: none;
+    }
+
+    .state-box {
+      grid-column: 1 / -1;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      text-align: center;
+      padding: 45px 20px;
+      color: var(--muted);
+    }
+
+    .state-box .symbol { font-size: 42px; margin-bottom: 12px; }
+    .state-box h3 { color: var(--dark); margin: 0 0 8px; }
+    .state-box p { font-size: 13px; line-height: 1.6; }
+
+    .callout {
+      margin-top: 40px;
+      border-radius: 16px;
+      background: #eaf1ff;
+      padding: 27px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .callout h2 { margin: 0 0 8px; font-size: 21px; }
+    .callout p { margin: 0; color: #475467; font-size: 13px; line-height: 1.6; }
+
+    footer {
+      background: #101828;
+      color: white;
+      padding: 35px 20px;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    footer p { color: #c5ccda; font-size: 12px; line-height: 1.7; }
+    .footer-links { display: flex; gap: 18px; font-size: 12px; }
+
+    @media (max-width: 900px) {
+      .header-inner { flex-wrap: wrap; gap: 14px; }
+      .brand { flex: 1; }
+      .search { order: 3; flex-basis: 100%; }
+      .products { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .hero { padding: 35px; }
+      .hero-art { font-size: 85px; }
+    }
+
+    @media (max-width: 600px) {
+      .top-strip { font-size: 11px; }
+      .header-inner { padding: 12px 14px; }
+      .brand { min-width: 0; }
+      .brand-name { font-size: 12px; }
+      .brand-logo { width: 38px; height: 38px; }
+      .header-links { gap: 12px; font-size: 12px; }
+      .register-link { padding: 10px; }
+      .category-inner { padding: 12px 14px; gap: 20px; }
+      main { padding: 17px 13px 35px; }
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 28px 22px;
+        min-height: 0;
+      }
+      .hero h1 { font-size: 34px; }
+      .hero-art { display: none; }
+      .benefits { grid-template-columns: 1fr; gap: 10px; margin-bottom: 32px; }
+      .benefit { padding: 13px; }
+      .section-head h2 { font-size: 21px; }
+      .products { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+      .product-image { height: 145px; }
+      .product-info { padding: 11px; }
+      .product-info h3 { font-size: 13px; }
+      .description { font-size: 11px; }
+      .price { font-size: 18px; }
+      .callout { padding: 20px; align-items: flex-start; flex-direction: column; }
+    }
+
+
+    /* MAA JAHNABI DESIGN UPGRADE V1 */
+    :root {
+      --blue: #155eef;
+      --dark: #101828;
+      --muted: #667085;
+      --bg: #f6f8fc;
+      --border: #e6eaf2;
+      --white: #ffffff;
+      --green: #07885b;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 150px;
+    }
+
+    body {
+      margin: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      transition: color .2s, background .2s, transform .2s;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    a:focus-visible,
+    button:focus-visible,
+    input:focus-visible {
+      outline: 3px solid #9bbcff;
+      outline-offset: 3px;
+    }
+
+    .top-strip {
+      padding: 9px 12px;
+      text-align: center;
+      letter-spacing: .15px;
+    }
+
+    .header {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-inner {
+      gap: 18px;
+      padding-top: 15px;
+      padding-bottom: 15px;
+    }
+
+    .brand {
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+
+    .brand-logo {
+      box-shadow: 0 5px 14px #155eef2b;
+    }
+
+    .brand-name {
+      line-height: 1.35;
+      letter-spacing: .15px;
+    }
+
+    .search {
+      min-width: 0;
+    }
+
+    .search input {
+      min-width: 0;
+      border: 1px solid var(--border);
+      background: #f8faff;
+      border-radius: 10px 0 0 10px;
+      padding: 12px 14px;
+      transition: border-color .2s, background .2s;
+    }
+
+    .search input:focus {
+      background: white;
+      border-color: var(--blue);
+      outline: none;
+    }
+
+    .search button,
+    .buy-btn,
+    .register-link {
+      transition: background .2s, transform .2s, box-shadow .2s;
+    }
+
+    .search button:hover,
+    .buy-btn:not(.disabled):hover {
+      background: #104bc5;
+      box-shadow: 0 5px 14px #155eef30;
+    }
+
+    .register-link {
+      box-shadow: 0 4px 12px #155eef20;
+    }
+
+    .categories {
+      border-top: 1px solid #f0f2f6;
+    }
+
+    .category-inner {
+      overflow-x: auto;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .category-inner::-webkit-scrollbar {
+      display: none;
+    }
+
+    .category-inner a {
+      white-space: nowrap;
+      text-decoration: none;
+    }
+
+    .category-inner a:hover,
+    .footer-links a:hover {
+      color: #8db3ff;
+    }
+
+    main {
+      padding-top: 28px;
+      padding-bottom: 50px;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid #dbe7ff;
+      box-shadow: 0 12px 32px #173f7410;
+    }
+
+    .hero h1 {
+      max-width: 620px;
+      line-height: 1.12;
+      letter-spacing: -1.2px;
+    }
+
+    .hero p {
+      max-width: 520px;
+      line-height: 1.8;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 11px;
+      margin-top: 24px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 12px 17px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: transform .2s, box-shadow .2s, background .2s;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-white:hover {
+      box-shadow: 0 6px 18px #10182820;
+    }
+
+    .hero-art {
+      user-select: none;
+    }
+
+    .benefits {
+      gap: 14px;
+      margin-top: 22px;
+      margin-bottom: 42px;
+    }
+
+    .benefit {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: 0 4px 15px #10182806;
+      transition: transform .2s, box-shadow .2s;
+    }
+
+    .benefit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 22px #1018280c;
+    }
+
+    .section-head {
+      margin-bottom: 22px;
+    }
+
+    .section-head h2 {
+      letter-spacing: -.7px;
+    }
+
+    .product-count {
+      white-space: nowrap;
+      background: #edf3ff;
+      color: #1749a6;
+      border-radius: 20px;
+      padding: 7px 11px;
+    }
+
+    .products {
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .product-card {
+      display: flex;
+      flex-direction: column;
+      border-color: #e5e9f1;
+      box-shadow: 0 3px 12px #10182805;
+    }
+
+    .product-card:hover {
+      border-color: #c9d9ff;
+      box-shadow: 0 12px 28px #10182810;
+    }
+
+    .product-image {
+      height: 205px;
+      background: linear-gradient(145deg, #f8faff, #edf2fa);
+      border-bottom: 1px solid #edf0f5;
+    }
+
+    .product-image img {
+      padding: 15px;
+      transition: transform .25s;
+    }
+
+    .product-card:hover .product-image img {
+      transform: scale(1.035);
+    }
+
+    .used-tag {
+      z-index: 1;
+      letter-spacing: .35px;
+    }
+
+    .product-info {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      align-items: stretch;
+      padding: 16px;
+    }
+
+    .product-info h3 {
+      line-height: 1.5;
+    }
+
+    .description {
+      overflow-wrap: anywhere;
+    }
+
+    .price {
+      margin-top: auto;
+      padding-top: 5px;
+      letter-spacing: -.4px;
+    }
+
+    .stock {
+      line-height: 1.5;
+    }
+
+    .buy-btn {
+      min-height: 44px;
+      padding: 13px 10px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 13px;
+    }
+
+    .buy-btn.disabled {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .state-box {
+      border-color: var(--border);
+      box-shadow: 0 4px 18px #10182805;
+    }
+
+    .callout {
+      border: 1px solid #dbe7ff;
+      box-shadow: 0 8px 24px #155eef08;
+    }
+
+    footer {
+      margin-top: 10px;
+    }
+
+    .footer-links a {
+      color: #e5eaf4;
+      text-decoration: none;
+    }
+
+    @media (max-width: 900px) {
+      .products {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .product-image {
+        height: 180px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      html {
+        scroll-padding-top: 125px;
+      }
+
+      .top-strip {
+        padding: 9px 10px;
+        line-height: 1.5;
+      }
+
+      .header-inner {
+        gap: 12px;
+        padding: 12px 14px;
+      }
+
+      .brand-name {
+        font-size: 12px;
+      }
+
+      .header-links {
+        gap: 8px;
+      }
+
+      .register-link {
+        padding: 9px 10px;
+      }
+
+      .category-inner {
+        gap: 19px;
+        padding: 12px 14px;
+      }
+
+      main {
+        padding: 17px 13px 35px;
+      }
+
+      .hero {
+        padding: 27px 20px;
+        border-radius: 17px;
+      }
+
+      .hero h1 {
+        font-size: clamp(29px, 8vw, 35px);
+        letter-spacing: -.8px;
+      }
+
+      .hero p {
+        font-size: 14px;
+        line-height: 1.75;
+      }
+
+      .hero-actions {
+        gap: 9px;
+      }
+
+      .hero-actions .btn {
+        padding: 12px 13px;
+        font-size: 13px;
+      }
+
+      .benefits {
+        gap: 10px;
+        margin-top: 15px;
+        margin-bottom: 34px;
+      }
+
+      .benefit {
+        border-radius: 12px;
+      }
+
+      .section-head {
+        align-items: center;
+        gap: 8px;
+      }
+
+      .section-head h2 {
+        font-size: 21px;
+      }
+
+      .section-head p {
+        line-height: 1.5;
+      }
+
+      .product-count {
+        font-size: 11px;
+        padding: 6px 8px;
+      }
+
+      .products {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 11px;
+      }
+
+      .product-card {
+        border-radius: 12px;
+      }
+
+      .product-image {
+        height: clamp(125px, 39vw, 165px);
+      }
+
+      .product-image img {
+        padding: 8px;
+      }
+
+      .used-tag {
+        top: 8px;
+        left: 8px;
+        padding: 5px 6px;
+        font-size: 9px;
+      }
+
+      .product-info {
+        padding: 10px;
+      }
+
+      .product-info h3 {
+        font-size: 13px;
+        line-height: 1.45;
+        margin-bottom: 7px;
+      }
+
+      .description {
+        font-size: 11px;
+        line-height: 1.5;
+        min-height: 0;
+        margin-bottom: 10px;
+      }
+
+      .price {
+        font-size: clamp(15px, 4.4vw, 19px);
+        overflow-wrap: anywhere;
+      }
+
+      .stock {
+        font-size: 10px;
+        margin-bottom: 11px;
+      }
+
+      .buy-btn {
+        min-height: 42px;
+        padding: 11px 5px;
+        font-size: 12px;
+      }
+
+      .callout {
+        margin-top: 30px;
+        padding: 19px;
+        border-radius: 14px;
+      }
+
+      .callout h2 {
+        font-size: 19px;
+        line-height: 1.4;
+      }
+
+      .footer-inner {
+        align-items: flex-start;
+      }
+
+      .footer-links {
+        flex-wrap: wrap;
+        gap: 15px;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .brand-name {
+        font-size: 11px;
+      }
+
+      .header-links {
+        gap: 6px;
+      }
+
+      .login-link,
+      .register-link {
+        font-size: 11px;
+      }
+
+      .products {
+        gap: 8px;
+      }
+
+      .product-info {
+        padding: 8px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+      }
+    }
+
+  </style>
+
+<!-- MAA_JAHNABI_PRODUCT_LIGHTBOX:CSS -->
+<style>
+.product-image img {
+  cursor: zoom-in;
+}
+#product-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(8, 13, 25, .92);
+  box-sizing: border-box;
+}
+#product-lightbox.open {
+  display: flex;
+}
+#product-lightbox .lightbox-photo {
+  display: block;
+  max-width: 94vw;
+  max-height: 84vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  cursor: zoom-in;
+  border-radius: 10px;
+  transition: transform .2s ease;
+  transform-origin: center;
+}
+#product-lightbox .lightbox-photo.zoomed {
+  transform: scale(1.8);
+  cursor: zoom-out;
+}
+#product-lightbox .lightbox-close {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  width: 46px;
+  height: 46px;
+  border: 0;
+  border-radius: 50%;
+  background: white;
+  color: #111827;
+  font-size: 30px;
+  line-height: 1;
+  cursor: pointer;
+}
+#product-lightbox .lightbox-hint {
+  position: absolute;
+  bottom: 18px;
+  left: 12px;
+  right: 12px;
+  color: white;
+  text-align: center;
+  font: 14px Arial, sans-serif;
+}
+body.lightbox-open {
+  overflow: hidden;
+}
+</style>
+
+
+<!-- MAA_JAHNABI_DESIGN_UPGRADE_V2 -->
+<style>
+:root {
+  --bg: #f5f7fb;
+  --border: #e3e8f1;
+  --green: #07885b;
+}
+
+body {
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+}
+
+.top-strip {
+  background: #102a56;
+  font-weight: 600;
+}
+
+.header {
+  box-shadow: 0 4px 18px rgba(16,24,40,.055);
+}
+
+.brand-logo {
+  border-radius: 13px;
+  background: linear-gradient(145deg,#155eef,#0b3fae);
+}
+
+.search {
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(16,24,40,.025);
+}
+
+.search button,
+.register-link,
+.buy-btn:not(.disabled) {
+  background: linear-gradient(135deg,#155eef,#104bc5);
+}
+
+.search button {
+  min-height: 44px;
+}
+
+.register-link,
+.buy-btn {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero {
+  background: linear-gradient(120deg,#102a56 0%,#155eef 72%,#4388ff 100%);
+  border: 0;
+  box-shadow: 0 16px 38px rgba(16,42,86,.14);
+}
+
+.hero .btn {
+  min-height: 46px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.benefit {
+  border-radius: 13px;
+}
+
+.section-head {
+  gap: 12px;
+}
+
+.product-card {
+  border-color: #e5eaf2;
+  border-radius: 16px;
+  box-shadow: 0 3px 12px rgba(16,24,40,.035);
+}
+
+.product-card:hover {
+  box-shadow: 0 12px 28px rgba(16,24,40,.09);
+}
+
+.product-image {
+  background: linear-gradient(145deg,#f8faff,#eef3fa);
+}
+
+.product-image img {
+  transition: transform .22s ease;
+}
+
+.product-info h3 {
+  letter-spacing: -.15px;
+}
+
+.price {
+  letter-spacing: -.35px;
+}
+
+.stock {
+  line-height: 1.5;
+}
+
+.buy-btn {
+  border-radius: 10px;
+}
+
+.callout {
+  border: 1px solid #dce7ff;
+  box-shadow: 0 6px 20px rgba(16,24,40,.035);
+}
+
+@media (max-width:600px) {
+  .top-strip {
+    padding: 9px 10px;
+    line-height: 1.5;
+  }
+
+  .header-inner {
+    gap: 11px;
+  }
+
+  .brand {
+    gap: 8px;
+  }
+
+  .brand-name {
+    overflow-wrap: anywhere;
+  }
+
+  .header-links {
+    gap: 8px;
+  }
+
+  .login-link,
+  .register-link {
+    font-size: 12px;
+  }
+
+  .search input {
+    min-height: 46px;
+    padding: 11px;
+  }
+
+  .search button {
+    padding: 0 14px;
+  }
+
+  main {
+    padding-top: 18px;
+  }
+
+  .hero {
+    border-radius: 17px;
+    padding: 26px 20px;
+  }
+
+  .hero h1 {
+    letter-spacing: -.7px;
+    overflow-wrap: anywhere;
+  }
+
+  .hero p {
+    line-height: 1.7;
+  }
+
+  .hero-actions {
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .section-head {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .products {
+    gap: 12px;
+  }
+
+  .product-card {
+    border-radius: 13px;
+  }
+
+  .product-image {
+    height: clamp(125px,38vw,180px);
+  }
+
+  .product-info {
+    padding: 12px;
+  }
+
+  .buy-btn {
+    padding: 12px 6px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width:360px) {
+  .header-links {
+    gap: 6px;
+  }
+
+  .register-link {
+    padding: 9px 8px;
+  }
+
+  .products {
+    gap: 8px;
+  }
+
+  .product-info {
+    padding: 9px;
+  }
+}
+
+@media (prefers-reduced-motion:reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *, *::before, *::after {
+    transition-duration: .01ms !important;
+    animation-duration: .01ms !important;
+  }
+}
+</style>
+
+</head>
+
+<body>
+  <div class="top-strip">
+    Smart deals on pre-owned electronics · Browse our available products
+  </div>
+
+  <header class="header">
+    <div class="header-inner">
+      <a class="brand" href="/">
+        <div class="brand-logo">M</div>
+        <div class="brand-name">
+          MAA JAHNABI
+          <span>RESALE HUB</span>
+        </div>
+      </a>
+
+      <form class="search" id="searchForm">
+        <input
+          type="search"
+          id="searchInput"
+          placeholder="Search phones, laptops, electronics..."
+          aria-label="Search products"
+        >
+        <button type="submit">Search</button>
+      </form>
+
+      <div class="header-links" id="headerLinks">
+        <a class="login-link" href="/login.html">Login</a>
+        <a class="register-link" href="/register.html">Register</a>
+      </div>
+    </div>
+
+    <nav class="categories">
+      <div class="category-inner">
+        <a href="#products" data-category="All" class="active">All Products</a>
+        <a href="#products" data-category="Mobile">Mobile Phones</a>
+        <a href="#products" data-category="Laptop">Laptops</a>
+        <a href="#products" data-category="Computer">Computers</a>
+        <a href="#products" data-category="Tablet">Tablets</a>
+        <a href="#products" data-category="Others">Others</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <span class="eyebrow">♻️ A smarter way to shop</span>
+        <h1>Great Electronics.<br>Smarter Prices.</h1>
+        <p>
+          Discover pre-owned electronics at MAA JAHNABI RESALE HUB.
+          Find your next device and shop with confidence.
+        </p>
+        <div class="hero-actions">
+          <a href="#products" class="btn btn-white">Explore Products →</a>
+          <a href="/register.html" class="btn btn-outline">Create Account</a>
+        </div>
+      </div>
+      <div class="hero-art" aria-hidden="true">📱 💻</div>
+    </section>
+
+    <section class="benefits" aria-label="Store features">
+      <div class="benefit">
+        <div class="benefit-icon">💰</div>
+        <div>
+          <strong>Budget-friendly prices</strong>
+          <small>Find products at prices that suit your budget.</small>
+        </div>
+      </div>
+      <div class="benefit">
+        <div class="benefit-icon">📦</div>
+        <div>
+          <strong>Easy ordering</strong>
+          <small>Register and place an order for available items.</small>
+        </div>
+      </div>
+      <div class="benefit">
+        <div class="benefit-icon">👤</div>
+        <div>
+          <strong>Your own account</strong>
+          <small>Sign in to view your orders and their status.</small>
+        </div>
+      </div>
+    </section>
+
+    <section id="products">
+      <div class="section-head">
+        <div>
+          <h2>Explore Products</h2>
+          <p>Discover what's available at our store.</p>
+        </div>
+        <span class="product-count" id="productCount"></span>
+      </div>
+
+      <div class="products" id="productGrid" aria-live="polite">
+        <div class="state-box">
+          <div class="symbol">⏳</div>
+          <h3>Loading products...</h3>
+          <p>Please wait while we fetch the latest products.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="callout">
+      <div>
+        <h2>Ready to find your next device?</h2>
+        <p>Create your customer account to get started and keep track of your orders.</p>
+      </div>
+      <a href="/register.html" class="btn btn-white"
+         style="background:#155eef;color:white;white-space:nowrap">
+        Join Us Today →
+      </a>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <strong>MAA JAHNABI RESALE HUB</strong>
+        <p>Smarter shopping for pre-owned electronics.</p>
+        <p>© <span id="year"></span> MAA JAHNABI RESALE HUB.</p>
+      </div>
+      <div class="footer-links">
+        <a href="/">Home</a>
+        <a href="/login.html">Login</a>
+        <a href="/register.html">Register</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const grid = document.getElementById("productGrid");
+    const searchInput = document.getElementById("searchInput");
+    const productCount = document.getElementById("productCount");
+
+    let allProducts = [];
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    function escapeHTML(value) {
+      return String(value ?? "").replace(/[&<>"']/g, character => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      })[character]);
+    }
+
+    function money(value) {
+      const amount = Number(value);
+      if (!Number.isFinite(amount)) return "Price unavailable";
+
+      return new Intl.NumberFormat("en-IN", {
+        style: "currency",
+        currency: "INR",
+        maximumFractionDigits: 2
+      }).format(amount);
+    }
+
+    function showState(title, message, symbol = "📦") {
+      grid.innerHTML = `
+        <div class="state-box">
+          <div class="symbol">${symbol}</div>
+          <h3>${escapeHTML(title)}</h3>
+          <p>${escapeHTML(message)}</p>
+        </div>
+      `;
+    }
+
+    function imageMarkup(product) {
+      const image = String(product.image || product.image_url || "").trim();
+
+      if (!image) {
+        return '<div class="product-placeholder" aria-label="No product image">📱</div>';
+      }
+
+      // Use a local upload path or an HTTPS image URL.
+      const safeImage =
+        image.startsWith("/uploads/") ||
+        image.startsWith("https://");
+
+      if (!safeImage) {
+        return '<div class="product-placeholder">📱</div>';
+      }
+
+      return `
+        <img
+          src="${escapeHTML(image)}"
+          alt="${escapeHTML(product.name || "Product")}"
+          loading="lazy"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='block'"
+        >
+        <div class="product-placeholder" style="display:none">📱</div>
+      `;
+    }
+
+    function renderProducts(products) {
+      productCount.textContent =
+        products.length + (products.length === 1 ? " product" : " products");
+
+      if (!products.length) {
+        showState(
+          "No matching products",
+          "Try another search, or check back later for new arrivals.",
+          "🔎"
+        );
+        return;
+      }
+
+      grid.innerHTML = products.map(product => {
+        const stock = Number(product.stock || 0);
+        const available = stock > 0;
+        const originalPrice = Number(product.price);
+        const discountPercent = Number(product.discountPercent || 0);
+        const salePrice = Number(
+          (originalPrice * (1 - discountPercent / 100)).toFixed(2)
+        );
+
+        return `
+          <article class="product-card">
+            <div class="product-image">
+              <span class="used-tag">PRE-OWNED</span>
+              ${imageMarkup(product)}
+            </div>
+            <div class="product-info">
+              <h3>${escapeHTML(product.name || "Electronics product")}</h3>
+              <p class="description">
+                ${escapeHTML(product.description || "Contact us for product details.")}
+              </p>
+              <div class="price">
+                ${
+                  discountPercent > 0
+                    ? `<span style="text-decoration:line-through;color:#64748b;font-size:.9em;margin-right:8px">${money(originalPrice)}</span><span>${money(salePrice)}</span><span style="display:inline-block;margin-left:8px;padding:3px 7px;border-radius:6px;background:#dcfce7;color:#166534;font-size:.8em;font-weight:700">${discountPercent}% OFF</span>`
+                    : `${money(originalPrice)}`
+                }
+              </div>
+              <div class="stock ${available ? "" : "out"}">
+                ${available ? "✓ In stock: " + stock : "Currently unavailable"}
+              </div>
+              ${
+                available
+                  ? `<a class="buy-btn" href="/checkout.html?productId=${encodeURIComponent(product.id)}">Order Now</a>`
+                  : `<span class="buy-btn disabled">Out of Stock</span>`
+              }
+            </div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    let activeCategory = "All";
+
+    function filterProducts() {
+      const query = searchInput.value.trim().toLowerCase();
+
+      const filtered = allProducts.filter(product => {
+        const text = [
+          product.name,
+          product.description
+        ].join(" ").toLowerCase();
+
+        const productCategory = product.category || "Others";
+        const matchesCategory =
+          activeCategory === "All" ||
+          productCategory === activeCategory;
+
+        return matchesCategory && text.includes(query);
+      });
+
+      renderProducts(filtered);
+    }
+
+    async function loadProducts() {
+      try {
+        const response = await fetch("/api/products", {
+          headers: { "Accept": "application/json" }
+        });
+
+        if (!response.ok) {
+          throw new Error("Products could not be loaded.");
+        }
+
+        const data = await response.json();
+
+        allProducts = Array.isArray(data)
+          ? data
+          : Array.isArray(data.products)
+            ? data.products
+            : [];
+
+        renderProducts(allProducts);
+      } catch (error) {
+        console.error("Product loading error:", error);
+
+        showState(
+          "We couldn't load products",
+          "Please refresh the page and try again.",
+          "⚠️"
+        );
+
+        productCount.textContent = "";
+      }
+    }
+
+    document.getElementById("searchForm").addEventListener("submit", event => {
+      event.preventDefault();
+      filterProducts();
+      document.getElementById("products").scrollIntoView();
+    });
+
+    searchInput.addEventListener("input", filterProducts);
+
+    document.querySelectorAll("[data-category]").forEach(link => {
+      link.addEventListener("click", () => {
+        activeCategory = link.dataset.category;
+
+        document.querySelectorAll("[data-category]").forEach(item => {
+          item.classList.toggle("active", item === link);
+        });
+
+        filterProducts();
+      });
+    });
+
+    loadProducts();
+
+
+document.addEventListener("click", async function(event) {
+  const link = event.target.closest('a.buy-btn[href^="/checkout.html"]');
+  if (!link) return;
+
+  event.preventDefault();
+  if (link.dataset.checking === "yes") return;
+  link.dataset.checking = "yes";
+
+  try {
+    const response = await fetch("/api/me", {
+      headers: { "Accept": "application/json" },
+      credentials: "same-origin"
+    });
+
+    const checkoutUrl = link.getAttribute("href");
+
+    if (response.status === 401) {
+      window.location.href =
+        "/login.html?next=" + encodeURIComponent(checkoutUrl);
+      return;
+    }
+
+    if (!response.ok) {
+      alert("Login status check nahi ho saka. Please try again.");
+      return;
+    }
+
+    const user = await response.json();
+
+    if (user && user.role === "customer") {
+      window.location.href = checkoutUrl;
+    } else {
+      window.location.href =
+        "/login.html?next=" + encodeURIComponent(checkoutUrl);
+    }
+  } catch (error) {
+    alert("Connection problem. Please try again.");
+  } finally {
+    delete link.dataset.checking;
+  }
+});
+
+async function updateCustomerProfile() {
+      const container = document.getElementById("headerLinks");
+      if (!container) return;
+
+      try {
+        const response = await fetch("/api/me", {
+          headers: { "Accept": "application/json" }
+        });
+
+        if (response.status === 401) return;
+        if (!response.ok) return;
+
+        const user = await response.json();
+        if (!user || user.role !== "customer") return;
+
+        const displayName = String(user.name || user.fullName || user.email || "Customer");
+        const area = document.createElement("div");
+        area.style.cssText = "display:flex;align-items:center;gap:10px;flex-wrap:wrap";
+
+        const profile = document.createElement("a");
+        profile.href = "/account.html";
+        profile.style.cssText = "display:flex;align-items:center;gap:8px;text-decoration:none;font-weight:700;color:inherit";
+
+        const avatar = document.createElement("span");
+        avatar.textContent = displayName.trim().charAt(0).toUpperCase() || "C";
+        avatar.style.cssText = "width:36px;height:36px;border-radius:50%;background:#173f74;color:white;display:inline-flex;align-items:center;justify-content:center";
+
+        const name = document.createElement("span");
+        name.textContent = displayName;
+        profile.append(avatar, name);
+
+        const account = document.createElement("a");
+        account.href = "/account.html";
+        account.textContent = "My Account";
+        account.style.cssText = "padding:9px 12px;border-radius:9px;background:#edf3ff;color:#173f74;text-decoration:none;font-weight:700";
+
+        const logout = document.createElement("button");
+        logout.type = "button";
+        logout.textContent = "Logout";
+        logout.style.cssText = "padding:9px 12px;border:1px solid #d7deea;border-radius:9px;background:white;cursor:pointer;font-weight:700";
+
+        logout.addEventListener("click", async () => {
+          logout.disabled = true;
+          try {
+            const result = await fetch("/api/logout", { method: "POST" });
+            if (!result.ok) throw new Error("Logout failed");
+            window.location.reload();
+          } catch (_) {
+            logout.disabled = false;
+            alert("Could not log out. Please try again.");
+          }
+        });
+
+        area.append(profile, account, logout);
+        container.replaceChildren(area);
+      } catch (error) {
+        console.error("Customer profile could not load:", error);
+      }
+    }
+
+    updateCustomerProfile();
+
+</script>
+
+<!-- MAA_JAHNABI_PRODUCT_LIGHTBOX:HTML -->
+<div id="product-lightbox" role="dialog"
+     aria-modal="true" aria-label="Product photo viewer">
+  <button type="button" class="lightbox-close"
+          aria-label="Close photo">&times;</button>
+  <img class="lightbox-photo" alt="Enlarged product photo">
+  <div class="lightbox-hint">Tap photo to zoom · Tap outside or × to close</div>
+</div>
+
+
+<!-- MAA_JAHNABI_PRODUCT_LIGHTBOX:JS -->
+<script>
+(function () {
+  const box = document.getElementById("product-lightbox");
+  if (!box) return;
+
+  const photo = box.querySelector(".lightbox-photo");
+  const closeButton = box.querySelector(".lightbox-close");
+  let historyAdded = false;
+
+  function closeLightbox(fromBack) {
+    if (!box.classList.contains("open")) return;
+
+    box.classList.remove("open");
+    photo.classList.remove("zoomed");
+    photo.removeAttribute("src");
+    document.body.classList.remove("lightbox-open");
+
+    if (historyAdded && !fromBack) {
+      historyAdded = false;
+      history.back();
+    } else {
+      historyAdded = false;
+    }
+  }
+
+  function openLightbox(img) {
+    if (!img || !img.src || img.style.display === "none") return;
+
+    photo.src = img.currentSrc || img.src;
+    photo.alt = img.alt || "Product photo";
+    photo.classList.remove("zoomed");
+    box.classList.add("open");
+    document.body.classList.add("lightbox-open");
+
+    if (!historyAdded) {
+      history.pushState({ productLightbox: true }, "");
+      historyAdded = true;
+    }
+
+    closeButton.focus();
+  }
+
+  document.addEventListener("click", function (event) {
+    const img = event.target.closest(".product-image img");
+
+    if (img && !box.contains(img)) {
+      event.preventDefault();
+      openLightbox(img);
+      return;
+    }
+
+    if (event.target === box || event.target === closeButton) {
+      closeLightbox(false);
+    }
+  });
+
+  photo.addEventListener("click", function () {
+    photo.classList.toggle("zoomed");
+  });
+
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape" && box.classList.contains("open")) {
+      closeLightbox(false);
+    }
+  });
+
+  window.addEventListener("popstate", function () {
+    if (box.classList.contains("open")) {
+      closeLightbox(true);
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

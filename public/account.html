@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#173f74">
+<title>My Account | MAA JAHNABI RESALE HUB</title>
+
+<style>
+*{box-sizing:border-box}
+:root{
+  --blue:#173f74;
+  --blue2:#245ba4;
+  --bg:#f3f6fb;
+  --text:#172033;
+  --muted:#68758b;
+  --border:#e4eaf2;
+}
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+header{
+  background:var(--blue);
+  color:white;
+  padding:18px 20px;
+}
+.topbar{
+  max-width:1050px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+.brand{font-size:19px;font-weight:800}
+.brand small{
+  display:block;
+  font-size:11px;
+  letter-spacing:2px;
+  margin-top:4px;
+  color:#d6e5ff;
+}
+.header-link{
+  color:white;
+  text-decoration:none;
+  border:1px solid #ffffff70;
+  border-radius:9px;
+  padding:10px 12px;
+  font-size:13px;
+}
+main{max-width:1050px;margin:26px auto;padding:0 16px}
+.welcome{
+  background:linear-gradient(125deg,#173f74,#326db5);
+  color:white;
+  padding:26px;
+  border-radius:18px;
+  margin-bottom:22px;
+}
+.welcome h1{font-size:25px;margin:0 0 9px}
+.welcome p{margin:0;color:#e1ecff;line-height:1.5}
+.layout{
+  display:grid;
+  grid-template-columns:285px minmax(0,1fr);
+  gap:20px;
+  align-items:start;
+}
+.card{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:15px;
+  padding:21px;
+  margin-bottom:18px;
+  box-shadow:0 3px 12px #14294a08;
+  min-width:0;
+}
+.card h2{font-size:18px;margin:0 0 17px}
+.profile-head{
+  display:flex;
+  align-items:center;
+  gap:13px;
+  margin-bottom:20px;
+}
+.avatar{
+  width:55px;height:55px;flex-shrink:0;
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:#e7efff;color:var(--blue);
+  font-size:24px;font-weight:bold;
+}
+.profile-name{font-weight:700;font-size:16px;overflow-wrap:anywhere}
+.profile-email{font-size:12px;color:var(--muted);margin-top:5px;overflow-wrap:anywhere}
+.info-row{
+  padding:13px 0;
+  border-top:1px solid var(--border);
+}
+.info-label{font-size:12px;color:var(--muted);margin-bottom:5px}
+.info-value{font-size:14px;font-weight:600;overflow-wrap:anywhere}
+.menu{
+  display:flex;align-items:center;gap:12px;
+  text-decoration:none;color:var(--text);
+  padding:13px 10px;border-radius:9px;
+  margin:3px 0;font-size:14px;
+}
+.menu:hover{background:#f0f5ff;color:var(--blue)}
+.menu-icon{font-size:19px;width:25px;text-align:center}
+.section-title{
+  display:flex;align-items:center;
+  justify-content:space-between;gap:10px;
+  margin-bottom:15px;
+}
+.section-title h2{margin:0}
+.count{
+  background:#e8efff;color:var(--blue);
+  border-radius:20px;padding:5px 10px;
+  font-size:12px;font-weight:700;
+}
+button,.btn{
+  display:inline-block;
+  border:0;border-radius:9px;
+  padding:11px 15px;
+  background:var(--blue);
+  color:white;text-decoration:none;
+  cursor:pointer;font-size:13px;font-weight:700;
+}
+button:hover,.btn:hover{background:var(--blue2)}
+button.secondary,.btn.secondary{
+  color:var(--blue);background:#edf3ff;
+}
+button:disabled{opacity:.6;cursor:wait}
+.order{
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:16px;margin-top:13px;
+}
+.order-top{
+  display:flex;justify-content:space-between;
+  align-items:flex-start;gap:12px;
+}
+.order h3{font-size:16px;margin:0 0 7px;overflow-wrap:anywhere}
+.order-id{font-size:12px;color:var(--muted)}
+.status{
+  display:inline-block;padding:6px 9px;
+  border-radius:20px;font-size:11px;
+  font-weight:700;text-transform:capitalize;
+  background:#fff2d6;color:#805400;
+  white-space:normal;text-align:center;
+}
+.status.delivered{background:#dcfce7;color:#166534}
+.status.cancelled{background:#fee2e2;color:#991b1b}
+.status.shipped,.status.confirmed{background:#dbeafe;color:#1d4ed8}
+.order-details{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:13px;margin-top:17px;
+}
+.detail-label{font-size:11px;color:var(--muted);margin-bottom:5px}
+.detail-value{font-size:14px;font-weight:700;overflow-wrap:anywhere}
+.order-date{font-size:12px;color:var(--muted);margin-top:15px}
+
+button.menu{
+  width:100%;
+  text-align:left;
+  font-weight:400;
+  font-family:inherit;
+  background:transparent;
+  color:var(--text);
+}
+button.menu:hover{background:#f0f5ff;color:var(--blue)}
+.order-tracking{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:6px;
+  list-style:none;
+  padding:0;
+  margin:18px 0 8px;
+}
+.order-tracking li{
+  position:relative;
+  min-width:0;
+  padding:9px 4px;
+  border-top:3px solid #dbe3ef;
+  color:var(--muted);
+  font-size:11px;
+  text-align:center;
+  overflow-wrap:anywhere;
+}
+.order-tracking li.done{border-color:#24845a;color:#166534}
+.order-tracking li.current{
+  border-color:var(--blue2);
+  color:var(--blue);
+  font-weight:700;
+}
+.order-tracking .tracking-cancelled{
+  grid-column:1/-1;
+  border:1px solid #fecaca;
+  border-radius:8px;
+  background:#fff1f2;
+  color:#991b1b;
+  font-weight:700;
+}
+.details-toggle{margin-top:12px}
+.order-extra-details{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:13px;
+  margin-top:13px;
+  padding:13px;
+  border-radius:9px;
+  background:#f7f9fc;
+}
+.order-extra-details[hidden]{display:none}
+.order-extra-details > div:last-child:nth-child(odd){grid-column:1/-1}
+@media(max-width:380px){
+  .order{padding:12px}
+  .order-tracking{gap:2px}
+  .order-tracking li{font-size:10px;padding:8px 2px}
+  .order-extra-details{grid-template-columns:1fr}
+}
+
+
+.ordered-product{
+  display:grid;
+  grid-template-columns:minmax(100px,150px) minmax(0,1fr);
+  gap:14px;
+  align-items:start;
+  margin-top:12px;
+  padding:13px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  background:#f8faff;
+}
+.ordered-product[hidden]{display:none}
+.ordered-product-image{
+  display:block;
+  width:100%;
+  max-height:170px;
+  aspect-ratio:1/1;
+  object-fit:contain;
+  border-radius:8px;
+  background:white;
+}
+.ordered-product-info{min-width:0}
+.ordered-product-info h4{
+  margin:0 0 8px;
+  font-size:15px;
+  overflow-wrap:anywhere;
+}
+.ordered-product-price{
+  margin:0 0 8px;
+  font-size:14px;
+  font-weight:700;
+  color:var(--blue);
+}
+.ordered-product-description{
+  margin:0;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.55;
+  overflow-wrap:anywhere;
+}
+@media(max-width:380px){
+  .ordered-product{grid-template-columns:1fr}
+  .ordered-product-image{max-height:210px}
+}
+
+.empty{
+  padding:27px 12px;text-align:center;
+  color:var(--muted);line-height:1.7;
+}
+.empty-icon{font-size:34px;margin-bottom:10px}
+.message{
+  display:none;padding:12px;border-radius:9px;
+  margin-bottom:16px;font-size:13px;line-height:1.5;
+}
+.message.error{display:block;background:#fee2e2;color:#991b1b}
+.message.success{display:block;background:#dcfce7;color:#166534}
+footer{
+  text-align:center;padding:22px 12px;
+  color:var(--muted);font-size:12px;
+}
+@media(max-width:700px){
+  main{margin:17px auto;padding:0 12px}
+  .layout{grid-template-columns:1fr;gap:0}
+  .welcome{padding:22px}
+  .welcome h1{font-size:22px}
+  .card{padding:17px}
+  .topbar{align-items:flex-start}
+  .brand{font-size:16px}
+  .header-link{font-size:12px;padding:9px}
+}
+@media(max-width:380px){
+  .order-top{flex-direction:column}
+  .order-details{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+
+<body>
+<header>
+  <div class="topbar">
+    <div class="brand">
+      MAA JAHNABI
+      <small>RESALE HUB</small>
+    </div>
+    <a class="header-link" href="/">← Continue Shopping</a>
+  </div>
+</header>
+
+<main>
+  <section class="welcome">
+    <h1>Welcome back, <span id="welcomeName">Customer</span>! 👋</h1>
+    <p>Your personal space to manage your account and track your purchases.</p>
+  </section>
+
+  <div id="notice" class="message"></div>
+
+  <div class="layout">
+    <aside>
+      <section class="card">
+        <h2>My Profile</h2>
+        <div class="profile-head">
+          <div class="avatar" id="avatar">C</div>
+          <div>
+            <div class="profile-name" id="profileName">Loading...</div>
+            <div class="profile-email" id="profileEmail">Loading account</div>
+          </div>
+        </div>
+
+        <div class="info-row">
+          <div class="info-label">Full name</div>
+          <div class="info-value" id="fullName">—</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">Email address</div>
+          <div class="info-value" id="emailValue">—</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">Account type</div>
+          <div class="info-value">Customer account</div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Quick Links</h2>
+        <a class="menu" href="/" >
+          <span class="menu-icon">🛍️</span> Browse Products
+        </a>
+        <a class="menu" href="#myOrders">
+          <span class="menu-icon">📦</span> My Orders
+        </a>
+        <button type="button" class="menu" id="supportLink">
+          <span class="menu-icon">💬</span> Help & Support
+        </button>
+        <button id="logout" class="secondary" style="width:100%;margin-top:12px">
+          ↪ Logout
+        </button>
+      </section>
+    </aside>
+
+    <section>
+      <div class="card" id="myOrders">
+        <div class="section-title">
+          <h2>📦 My Orders</h2>
+          <span class="count" id="orderCount">0 orders</span>
+        </div>
+        <div id="orderMessage" class="muted">Loading your orders...</div>
+        <div id="orders"></div>
+        <button id="refresh" class="secondary" style="margin-top:15px">
+          ↻ Refresh Orders
+        </button>
+      </div>
+
+      <div class="card">
+        <h2>Shopping with confidence</h2>
+        <p style="color:#68758b;line-height:1.7;font-size:14px;margin-bottom:18px">
+          Need another item? Browse our available used electronics and check
+          your order history whenever you need an update.
+        </p>
+        <a class="btn" href="/">Explore Products →</a>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer>MAA JAHNABI RESALE HUB · Your account, your orders.</footer>
+
+<script>
+const $ = id => document.getElementById(id);
+
+async function api(url, options = {}) {
+  const response = await fetch(url, {
+    credentials: "same-origin",
+    ...options
+  });
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) {
+    throw new Error(data.message || "Request failed.");
+  }
+  return data;
+}
+
+function showNotice(message, isError = false) {
+  const box = $("notice");
+  box.textContent = message;
+  box.className = "message " + (isError ? "error" : "success");
+}
+
+async function loadAccount() {
+  try {
+    const user = await api("/api/me");
+
+    if (user.role === "admin") {
+      window.location.replace("/admin.html");
+      return;
+    }
+
+    const name = user.username || user.name || "Customer";
+    const email = user.email || "Email unavailable";
+
+    $("welcomeName").textContent = name;
+    $("profileName").textContent = name;
+    $("profileEmail").textContent = email;
+    $("fullName").textContent = name;
+    $("emailValue").textContent = email;
+    $("avatar").textContent = name.trim().charAt(0).toUpperCase() || "C";
+
+    await loadOrders();
+  } catch (error) {
+    window.location.replace("/login.html");
+  }
+}
+
+async function loadOrders() {
+  $("orderMessage").textContent = "Loading your orders...";
+  $("orders").replaceChildren();
+  $("orderCount").textContent = "…";
+
+  try {
+    const orders = await api("/api/my-orders");
+
+    if (!Array.isArray(orders)) {
+      throw new Error("Unexpected order data.");
+    }
+
+    $("orderCount").textContent =
+      orders.length + (orders.length === 1 ? " order" : " orders");
+
+    if (orders.length === 0) {
+      $("orderMessage").textContent = "";
+      const empty = document.createElement("div");
+      empty.className = "empty";
+      empty.innerHTML =
+        '<div class="empty-icon">🛍️</div>' +
+        '<strong>No orders yet</strong><br>' +
+        'Your purchases will appear here when you place an order.';
+      $("orders").appendChild(empty);
+      return;
+    }
+
+    $("orderMessage").textContent =
+      "Here is your purchase history, newest orders first.";
+
+    for (const order of orders) {
+      const card = document.createElement("article");
+      card.className = "order";
+
+      const top = document.createElement("div");
+      top.className = "order-top";
+
+      const heading = document.createElement("div");
+      const title = document.createElement("h3");
+      title.textContent =
+        order.productName || ("Product #" + order.productId);
+
+      const id = document.createElement("div");
+      id.className = "order-id";
+      id.textContent = "Order #" + order.id;
+
+      heading.append(title, id);
+
+      const status = document.createElement("span");
+      const orderStatus = String(order.status || "pending").toLowerCase();
+      status.className = "status " + orderStatus;
+      status.textContent = orderStatus;
+
+      top.append(heading, status);
+
+      const details = document.createElement("div");
+      details.className = "order-details";
+
+      function addDetail(container, label, value) {
+        const item = document.createElement("div");
+        const caption = document.createElement("div");
+        caption.className = "detail-label";
+        caption.textContent = label;
+
+        const content = document.createElement("div");
+        content.className = "detail-value";
+        content.textContent = value == null || value === ""
+          ? "Not provided"
+          : String(value);
+
+        item.append(caption, content);
+        container.appendChild(item);
+      }
+
+      addDetail(details, "Quantity", String(order.quantity));
+      addDetail(
+        details,
+        "Total amount",
+        "₹" + Number(order.total || 0).toFixed(2)
+      );
+      addDetail(details, "Payment method", order.paymentMethod || "COD");
+
+      // Show progress using the order's actual saved status.
+      const tracking = document.createElement("ol");
+      tracking.className = "order-tracking";
+      tracking.setAttribute("aria-label", "Order progress");
+
+      const stages = ["Pending", "Confirmed", "Shipped", "Delivered"];
+      const normalizedStatus = String(order.status || "Pending").toLowerCase();
+
+      if (normalizedStatus === "cancelled") {
+        const cancelled = document.createElement("li");
+        cancelled.className = "tracking-cancelled";
+        cancelled.textContent = "Order cancelled";
+        tracking.appendChild(cancelled);
+      } else {
+        const stageIndex = stages.findIndex(
+          stage => stage.toLowerCase() === normalizedStatus
+        );
+
+        stages.forEach((stage, index) => {
+          const step = document.createElement("li");
+          step.textContent = stage;
+          if (stageIndex >= 0 && index < stageIndex) {
+            step.classList.add("done");
+          } else if (index === stageIndex) {
+            step.classList.add("current");
+            step.setAttribute("aria-current", "step");
+          }
+          tracking.appendChild(step);
+        });
+      }
+
+      const date = document.createElement("div");
+      date.className = "order-date";
+      const parsedDate = new Date(order.createdAt);
+      date.textContent = "Ordered: " +
+        (Number.isNaN(parsedDate.getTime())
+          ? "Date unavailable"
+          : parsedDate.toLocaleString());
+
+      // Keep personal delivery information hidden until requested.
+      const extraDetails = document.createElement("div");
+      extraDetails.className = "order-extra-details";
+      extraDetails.hidden = true;
+      addDetail(extraDetails, "Unit price", "₹" +
+        Number(order.unitPrice || 0).toFixed(2));
+      addDetail(extraDetails, "Delivery phone", order.phone);
+      addDetail(extraDetails, "Delivery address", order.address);
+
+      const detailsToggle = document.createElement("button");
+      detailsToggle.type = "button";
+      detailsToggle.className = "secondary details-toggle";
+      detailsToggle.textContent = "View Details";
+      detailsToggle.setAttribute("aria-expanded", "false");
+      detailsToggle.addEventListener("click", () => {
+        const opening = extraDetails.hidden;
+        extraDetails.hidden = !opening;
+        detailsToggle.textContent = opening ? "Hide Details" : "View Details";
+        detailsToggle.setAttribute("aria-expanded", String(opening));
+      });
+
+
+      // Show this order's product inside the same card.
+      const productPanel = document.createElement("section");
+      productPanel.className = "ordered-product";
+      productPanel.hidden = true;
+      productPanel.setAttribute("aria-label", "Ordered product details");
+
+      const productImage = document.createElement("img");
+      productImage.className = "ordered-product-image";
+      productImage.alt = order.productName || "Ordered product";
+      productImage.loading = "lazy";
+      productImage.hidden = true;
+
+      const productInfo = document.createElement("div");
+      productInfo.className = "ordered-product-info";
+
+      const productTitle = document.createElement("h4");
+      productTitle.textContent = order.productName || ("Product #" + order.productId);
+
+      const productPrice = document.createElement("p");
+      productPrice.className = "ordered-product-price";
+
+      const productDescription = document.createElement("p");
+      productDescription.className = "ordered-product-description";
+
+      productInfo.append(productTitle, productPrice, productDescription);
+      productPanel.append(productImage, productInfo);
+
+      const productToggle = document.createElement("button");
+      productToggle.type = "button";
+      productToggle.className = "secondary view-product-button";
+      productToggle.textContent = "View Product";
+      productToggle.style.marginTop = "12px";
+      productToggle.setAttribute("aria-expanded", "false");
+
+      let productLoaded = false;
+      productToggle.addEventListener("click", async () => {
+        if (!productPanel.hidden) {
+          productPanel.hidden = true;
+          productToggle.textContent = "View Product";
+          productToggle.setAttribute("aria-expanded", "false");
+          return;
+        }
+
+        productPanel.hidden = false;
+        productToggle.setAttribute("aria-expanded", "true");
+
+        if (productLoaded) {
+          productToggle.textContent = "Hide Product";
+          return;
+        }
+
+        productToggle.disabled = true;
+        productToggle.textContent = "Loading Product...";
+
+        try {
+          const products = await api("/api/products");
+          const product = Array.isArray(products)
+            ? products.find(item => Number(item.id) === Number(order.productId))
+            : null;
+
+          if (!product) {
+            productDescription.textContent =
+              "This product is no longer available in the store.";
+            productPrice.textContent = "";
+            productLoaded = true;
+          } else {
+            productTitle.textContent = product.name || ("Product #" + order.productId);
+            productPrice.textContent =
+              "Current price: ₹" + Number(product.price || 0).toFixed(2);
+            productDescription.textContent =
+              product.description || "No product description available.";
+
+            if (product.image) {
+              // Only accept same-origin relative upload paths or same-origin URLs.
+              try {
+                const imageUrl = new URL(product.image, window.location.origin);
+                if (imageUrl.origin === window.location.origin) {
+                  productImage.src = imageUrl.href;
+                  productImage.hidden = false;
+                }
+              } catch (_) {
+                productImage.hidden = true;
+              }
+            }
+            productLoaded = true;
+          }
+
+          productToggle.textContent = "Hide Product";
+        } catch (_) {
+          productDescription.textContent =
+            "Could not load product details. Please try again.";
+          productToggle.textContent = "Retry Product Details";
+          productLoaded = false;
+        } finally {
+          productToggle.disabled = false;
+        }
+      });
+
+      productImage.addEventListener("error", () => {
+        productImage.hidden = true;
+      });
+
+      card.append(top, tracking, details, date, detailsToggle, extraDetails, productToggle, productPanel);
+
+      if (["pending", "confirmed"].includes(orderStatus)) {
+        const cancelButton = document.createElement("button");
+        cancelButton.type = "button";
+        cancelButton.className = "secondary";
+        cancelButton.textContent = "Cancel Order";
+        cancelButton.style.marginTop = "12px";
+
+        cancelButton.addEventListener("click", async () => {
+          if (!window.confirm(
+            "Cancel order #" + order.id + "? This will restore the product stock."
+          )) {
+            return;
+          }
+
+          cancelButton.disabled = true;
+
+          try {
+            const result = await api(
+              "/api/my-orders/" + encodeURIComponent(order.id) + "/cancel",
+              { method: "POST" }
+            );
+            showNotice(result.message || "Order cancelled successfully.");
+            await loadOrders();
+          } catch (error) {
+            showNotice(error.message || "Could not cancel this order.", true);
+            cancelButton.disabled = false;
+          }
+        });
+
+        card.appendChild(cancelButton);
+      }
+
+      $("orders").appendChild(card);
+    }
+  } catch (error) {
+    $("orderCount").textContent = "Unavailable";
+    $("orderMessage").textContent =
+      "We couldn't load your orders. Please try again.";
+    showNotice(error.message, true);
+  }
+}
+
+$("supportLink").addEventListener("click", () => {
+  showNotice(
+    "Support contact is not configured yet. Please check the store website for published contact details. For an order issue, keep your order number handy.",
+    true
+  );
+  $("myOrders").scrollIntoView({ behavior: "smooth", block: "start" });
+});
+
+$("refresh").addEventListener("click", async () => {
+  $("refresh").disabled = true;
+  try {
+    await loadOrders();
+  } finally {
+    $("refresh").disabled = false;
+  }
+});
+
+$("logout").addEventListener("click", async () => {
+  $("logout").disabled = true;
+  try {
+    await api("/api/logout", { method: "POST" });
+  } catch (error) {
+    showNotice("Logout request failed. Please try again.", true);
+    $("logout").disabled = false;
+    return;
+  }
+  window.location.replace("/login.html");
+});
+
+loadAccount();
+</script>
+</body>
+</html>

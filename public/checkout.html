@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#173f74">
+<title>Secure Checkout | MAA JAHNABI RESALE HUB</title>
+<style>
+:root{--blue:#173f74;--light:#f3f6fb;--green:#16834a;--red:#c62828}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:var(--light);color:#172033}
+header{background:var(--blue);color:white;padding:18px 5%;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.brand{font-size:19px;font-weight:800;letter-spacing:.5px}
+.brand small{display:block;font-size:11px;letter-spacing:3px;margin-top:4px}
+a{color:inherit}
+header a{font-size:13px}
+main{max-width:1000px;margin:28px auto;padding:0 16px}
+h1{font-size:27px;margin:0 0 8px}
+.subtitle{color:#64748b;margin:0 0 24px;line-height:1.5}
+.layout{display:grid;grid-template-columns:1.35fr .8fr;gap:20px;align-items:start}
+.panel{background:white;border-radius:16px;padding:22px;box-shadow:0 5px 24px #1720330b;margin-bottom:18px}
+h2{font-size:18px;margin:0 0 18px}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.field{display:flex;flex-direction:column;gap:7px}
+.field.full{grid-column:1/-1}
+label{font-size:13px;font-weight:700}
+input,textarea{width:100%;padding:12px;border:1px solid #d7deea;border-radius:9px;font:inherit;font-size:14px;background:white}
+input:focus,textarea:focus{outline:2px solid #9dbce8;border-color:var(--blue)}
+textarea{resize:vertical;min-height:80px}
+.cod{display:flex;gap:12px;align-items:center;padding:14px;background:#f0faf4;border:1px solid #c9ead5;border-radius:11px}
+.cod .symbol{font-size:25px}
+.cod p{margin:4px 0 0;font-size:13px;color:#4c6656}
+.summary-row{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid #edf0f5;font-size:14px}
+.summary-row span:first-child{color:#64748b}
+.total{font-size:19px;font-weight:800;border:0;padding-top:18px}
+.product{display:flex;gap:12px;align-items:center;margin-bottom:10px}
+.product img{width:76px;height:76px;object-fit:cover;border-radius:10px;background:#f1f5f9}
+.product-name{font-weight:700;line-height:1.4}
+.muted{font-size:13px;color:#64748b;margin-top:5px}
+button{width:100%;padding:14px;border:0;border-radius:10px;background:var(--green);color:white;font-size:15px;font-weight:800;cursor:pointer}
+button:disabled{opacity:.6;cursor:wait}
+.message{display:none;padding:12px;border-radius:9px;margin-bottom:16px;font-size:14px;line-height:1.5}
+.message.show{display:block}
+.message.error{background:#fff0f0;color:var(--red)}
+.message.success{background:#e9f8ee;color:#176438}
+.note{font-size:12px;color:#64748b;line-height:1.5;margin-top:12px}
+@media(max-width:720px){.layout{grid-template-columns:1fr}.summary{order:-1}main{margin-top:22px}.panel{padding:18px}}
+@media(max-width:380px){.fields{grid-template-columns:1fr}.field.full{grid-column:auto}h1{font-size:23px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">MAA JAHNABI<small>RESALE HUB</small></div>
+  <a href="/">← Continue shopping</a>
+</header>
+
+<main>
+  <h1>Secure checkout</h1>
+  <p class="subtitle">Enter your delivery details and review your order before confirming.</p>
+  <div id="notice" class="message" role="alert"></div>
+
+  <div class="layout">
+    <section>
+      <form id="checkoutForm">
+        <div class="panel">
+          <h2>Delivery information</h2>
+          <div class="fields">
+            <div class="field full">
+              <label for="customerName">Full name *</label>
+              <input id="customerName" name="customerName" autocomplete="name" minlength="2" maxlength="100" required>
+            </div>
+            <div class="field full">
+              <label for="phone">Mobile number *</label>
+              <input id="phone" name="phone" type="tel" autocomplete="tel" minlength="8" maxlength="20" required>
+            </div>
+            <div class="field full">
+              <label for="addressLine">House number and street address *</label>
+              <textarea id="addressLine" name="addressLine" autocomplete="street-address" minlength="5" maxlength="500" required></textarea>
+            </div>
+            <div class="field">
+              <label for="city">Town / City *</label>
+              <input id="city" name="city" autocomplete="address-level2" maxlength="100" required>
+            </div>
+            <div class="field">
+              <label for="state">State *</label>
+              <input id="state" name="state" autocomplete="address-level1" maxlength="100" required>
+            </div>
+            <div class="field full">
+              <label for="pincode">PIN code *</label>
+              <input id="pincode" name="pincode" inputmode="numeric" autocomplete="postal-code" pattern="[0-9]{6}" minlength="6" maxlength="6" placeholder="6-digit PIN code" required>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2>Payment method</h2>
+          <div class="cod">
+            <div class="symbol">💵</div>
+            <div><strong>Cash on Delivery (COD)</strong><p>Pay when your order is delivered.</p></div>
+          </div>
+        </div>
+        <button id="placeOrder" type="submit">Confirm COD order</button>
+        <p class="note">Please check your address and phone number before placing the order. The final price and available stock are verified by the server.</p>
+      </form>
+    </section>
+
+    <aside class="panel summary">
+      <h2>Order summary</h2>
+      <div id="productArea">Loading product details…</div>
+      <div class="summary-row"><span>Original price</span><strong id="originalPrice">—</strong></div>
+      <div class="summary-row"><span>Discount</span><strong id="discountLabel">0%</strong></div>
+      <div class="summary-row"><span>Sale price</span><strong id="unitPrice">—</strong></div>
+      <div class="summary-row">
+        <label for="quantity">Quantity</label>
+        <input id="quantity" type="number" min="1" max="20" value="1" style="width:82px;padding:7px">
+      </div>
+      <div class="summary-row"><span>Delivery</span><strong>Confirm at checkout</strong></div>
+      <div class="summary-row total"><span>Item total</span><strong id="total">—</strong></div>
+      <p class="note">The server verifies the current product price and discount when you place the order. No online payment is collected on this page.</p>
+    </aside>
+  </div>
+</main>
+
+<script>
+const $ = id => document.getElementById(id);
+let selectedProduct = null;
+let submitting = false;
+
+function money(value) {
+  return "₹" + Number(value).toLocaleString("en-IN", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  });
+}
+
+function notice(message, error = true) {
+  const el = $("notice");
+  el.textContent = message;
+  el.className = "message show " + (error ? "error" : "success");
+  el.scrollIntoView({behavior:"smooth", block:"nearest"});
+}
+
+async function loadProduct() {
+  const params = new URLSearchParams(location.search);
+  const productId = Number(params.get("productId"));
+  const initialQuantity = Number(params.get("quantity") || 1);
+
+  if (!Number.isSafeInteger(productId) || productId < 1) {
+    $("productArea").textContent = "No product selected. Please return to the shop and choose an item.";
+    $("placeOrder").disabled = true;
+    return;
+  }
+
+  if (Number.isInteger(initialQuantity) && initialQuantity >= 1 && initialQuantity <= 20) {
+    $("quantity").value = initialQuantity;
+  }
+
+  try {
+    const response = await fetch("/api/products");
+    const products = await response.json();
+    if (!response.ok || !Array.isArray(products)) throw new Error("Could not load products.");
+
+    selectedProduct = products.find(p => Number(p.id) === productId);
+    if (!selectedProduct) throw new Error("This product is unavailable. Please return to the shop.");
+
+    const area = $("productArea");
+    area.textContent = "";
+    const product = document.createElement("div");
+    product.className = "product";
+
+    if (selectedProduct.image_url) {
+      const img = document.createElement("img");
+      img.src = selectedProduct.image_url;
+      img.alt = selectedProduct.name || "Product";
+      img.onerror = () => img.remove();
+      product.appendChild(img);
+    }
+
+    const info = document.createElement("div");
+    const name = document.createElement("div");
+    name.className = "product-name";
+    name.textContent = selectedProduct.name;
+    const stock = document.createElement("div");
+    stock.className = "muted";
+    stock.textContent = Number(selectedProduct.stock) > 0
+      ? Number(selectedProduct.stock) + " available"
+      : "Out of stock";
+    info.append(name, stock);
+    product.appendChild(info);
+    area.appendChild(product);
+
+    const originalPrice = Number(selectedProduct.price);
+    const discountPercent = Number(selectedProduct.discountPercent || 0);
+    const salePrice = Number(
+      (originalPrice * (1 - discountPercent / 100)).toFixed(2)
+    );
+
+    $("originalPrice").textContent = money(originalPrice);
+    $("discountLabel").textContent = discountPercent + "%";
+    $("unitPrice").textContent = money(salePrice);
+    updateTotal();
+    $("placeOrder").disabled = Number(selectedProduct.stock) < 1;
+    if (Number(selectedProduct.stock) < 1) notice("This product is out of stock.");
+  } catch (error) {
+    $("productArea").textContent = error.message || "Could not load the product.";
+    $("placeOrder").disabled = true;
+  }
+}
+
+function updateTotal() {
+  if (!selectedProduct) return;
+  const quantity = Number($("quantity").value);
+  if (!Number.isInteger(quantity) || quantity < 1 || quantity > 20) {
+    $("total").textContent = "Check quantity";
+    return;
+  }
+  const originalPrice = Number(selectedProduct.price);
+  const discountPercent = Number(selectedProduct.discountPercent || 0);
+  const salePrice = Number(
+    (originalPrice * (1 - discountPercent / 100)).toFixed(2)
+  );
+  $("total").textContent = money(salePrice * quantity);
+}
+
+$("quantity").addEventListener("input", updateTotal);
+
+$("checkoutForm").addEventListener("submit", async event => {
+  event.preventDefault();
+  if (submitting || !selectedProduct) return;
+
+  const quantity = Number($("quantity").value);
+  if (!Number.isInteger(quantity) || quantity < 1 || quantity > 20) {
+    notice("Please choose a quantity between 1 and 20.");
+    return;
+  }
+  if (quantity > Number(selectedProduct.stock)) {
+    notice("There is not enough stock for this quantity.");
+    return;
+  }
+
+  const payload = {
+    productId: Number(selectedProduct.id),
+    quantity,
+    customerName: $("customerName").value.trim(),
+    phone: $("phone").value.trim(),
+    addressLine: $("addressLine").value.trim(),
+    city: $("city").value.trim(),
+    state: $("state").value.trim(),
+    pincode: $("pincode").value.trim()
+  };
+
+  if (!/^[0-9]{6}$/.test(payload.pincode)) {
+    notice("Please enter a valid six-digit PIN code.");
+    $("pincode").focus();
+    return;
+  }
+
+  submitting = true;
+  $("placeOrder").disabled = true;
+  $("placeOrder").textContent = "Placing your order…";
+
+  try {
+    const response = await fetch("/api/orders", {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify(payload)
+    });
+    const result = await response.json().catch(() => ({}));
+
+    if (response.status === 401 || response.status === 403) {
+      notice("Please log in with your customer account before placing an order.");
+      return;
+    }
+    if (!response.ok) {
+      throw new Error(result.message || "Could not place your order. Please try again.");
+    }
+
+    notice("Order placed successfully! Order number: " + result.id + ". Payment: Cash on Delivery.", false);
+    $("checkoutForm").reset();
+    $("quantity").value = 1;
+    updateTotal();
+    $("placeOrder").textContent = "Order placed successfully";
+    $("placeOrder").disabled = true;
+
+    const goAccount = document.createElement("p");
+    goAccount.style.textAlign = "center";
+    const link = document.createElement("a");
+    link.href = "/account.html";
+    link.textContent = "View your orders in My Account";
+    goAccount.appendChild(link);
+    $("checkoutForm").appendChild(goAccount);
+  } catch (error) {
+    notice(error.message || "Something went wrong.");
+  } finally {
+    submitting = false;
+    if (!$("placeOrder").textContent.includes("successfully")) {
+      $("placeOrder").disabled = !selectedProduct || Number(selectedProduct.stock) < 1;
+      $("placeOrder").textContent = "Confirm COD order";
+    }
+  }
+});
+
+async function checkLogin() {
+  try {
+    const response = await fetch("/api/me", {
+      headers: { "Accept": "application/json" }
+    });
+
+    if (response.status === 401) {
+      const next = "/checkout.html" + window.location.search;
+      window.location.replace("/login.html?next=" + encodeURIComponent(next));
+      return false;
+    }
+
+    if (!response.ok) {
+      notice("We couldn't verify your login. Please refresh and try again.");
+      $("placeOrder").disabled = true;
+      return false;
+    }
+
+    const user = await response.json();
+
+    if (user.role !== "customer") {
+      notice("Please log in with a customer account to place an order.");
+      $("placeOrder").disabled = true;
+      return false;
+    }
+
+    return true;
+  } catch (error) {
+    notice("Couldn't verify your login. Please check your connection.");
+    $("placeOrder").disabled = true;
+    return false;
+  }
+}
+
+(async () => {
+  if (await checkLogin()) {
+    await loadProduct();
+  }
+})();
+</script>
+</body>
+</html>

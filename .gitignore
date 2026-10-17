@@ -1,0 +1,37 @@
+# Secrets and local environment files
+.env
+.env.*
+!.env.example
+my.env
+
+# Dependencies and local files
+node_modules/
+npm-debug.log*
+.DS_Store
+*.pid
+server-test.log
+server-test.pid
+.account-check-temp.js
+
+# Local backups and database dumps
+server-*.js
+server.js.before-*
+*.dump
+
+# Local database migration and inspection helpers
+migrate-*.js
+setup-db.js
+test-db.js
+inspect-*.js
+update-*.py
+
+# Historical frontend backups
+public/*-backup.html
+public/*-before-*.html
+public/*.backup
+public/*.before-*
+public/account.html.before-*
+public/admin.html.before-*
+public/index.html.before-*
+public/login-before-*.html
+public/checkout-before-*.html

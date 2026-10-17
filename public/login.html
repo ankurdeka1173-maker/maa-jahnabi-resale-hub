@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login | MAA JAHNABI RESALE HUB</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+    margin:0;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:Arial,sans-serif;
+    background:linear-gradient(135deg,#101827,#2457a7);
+    padding:20px;
+}
+.card{
+    width:100%;
+    max-width:400px;
+    background:white;
+    padding:30px;
+    border-radius:18px;
+    box-shadow:0 15px 45px #0004;
+}
+h1{text-align:center;font-size:23px;color:#14213d}
+p{text-align:center;color:#667085}
+input,button{
+    width:100%;
+    padding:14px;
+    margin-top:13px;
+    border-radius:9px;
+    font-size:15px;
+}
+input{border:1px solid #d0d5dd}
+button{
+    border:0;
+    background:#087fdb;
+    color:white;
+    font-weight:bold;
+}
+a{color:#087fdb;text-decoration:none}
+#message{text-align:center;font-size:14px}
+</style>
+</head>
+
+<body>
+<div class="card">
+    <h1>Welcome Back!</h1>
+    <p>MAA JAHNABI RESALE HUB</p>
+
+    <form id="loginForm">
+        <input name="email" type="email" placeholder="Email address" required>
+        <input name="password" type="password" placeholder="Password" required>
+        <button type="submit">Login</button>
+    </form>
+
+    <p id="message" role="status"></p>
+    <p>New customer? <a href="/register.html">Create account</a></p>
+    <p><a href="/">Back to Home</a></p>
+</div>
+
+<script>
+const form = document.getElementById("loginForm");
+const message = document.getElementById("message");
+
+form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    message.textContent = "Signing in...";
+
+    const data = Object.fromEntries(new FormData(form));
+
+    try {
+        const response = await fetch("/api/login", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+        message.textContent = result.message;
+
+        if (response.ok) {
+            setTimeout(() => {
+                const next = new URLSearchParams(window.location.search).get("next");
+                if (next === "/checkout.html" || next?.startsWith("/checkout.html?")) {
+                    window.location.href = next;
+                } else {
+                    window.location.href = "/account.html";
+                }
+            }, 700);
+        }
+    } catch {
+        message.textContent = "Could not connect to the server.";
+    }
+});
+</script>
+</body>
+</html>

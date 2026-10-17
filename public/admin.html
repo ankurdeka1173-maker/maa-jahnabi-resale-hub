@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard | MAA JAHNABI RESALE HUB</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f3f5f9;color:#182230}
+header{background:#111827;color:white;padding:20px}
+header h1{margin:0;font-size:22px}
+header p{color:#cbd5e1;margin-bottom:0}
+main{max-width:1100px;margin:auto;padding:18px}
+.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.card,.panel{background:white;padding:18px;border-radius:14px;margin-bottom:16px;box-shadow:0 3px 12px #0000000a}
+.card strong{display:block;font-size:27px;margin-top:8px;color:#2563eb}
+h2{font-size:19px;margin-top:0}
+input,textarea,select,button{width:100%;padding:12px;margin:6px 0;border:1px solid #d1d5db;border-radius:8px;font-size:15px}
+button{background:#2563eb;color:white;border:0;font-weight:bold;cursor:pointer}
+button.danger{background:#dc2626}
+button.secondary{background:#475569}
+.item{border:1px solid #e5e7eb;border-radius:10px;padding:12px;margin:10px 0;overflow-wrap:anywhere}
+.item img{width:100%;max-width:180px;height:140px;object-fit:cover;border-radius:8px;display:block}
+.muted{color:#64748b;font-size:13px}
+#notice{padding:12px;border-radius:8px;margin-bottom:12px;display:none}
+@media(min-width:700px){.cards{grid-template-columns:repeat(4,1fr)}.layout{display:grid;grid-template-columns:1fr 1fr;gap:16px}}
+</style>
+</head>
+<body>
+<header>
+<h1>MAA JAHNABI RESALE HUB</h1>
+<p>Admin Control Center</p>
+</header>
+
+<main>
+<div id="notice"></div>
+
+<section id="loginBox" class="panel" hidden>
+<h2>Admin Login Required</h2>
+<p class="muted">Login using the administrator credentials configured in your .env file.</p>
+<form id="loginForm">
+<input id="email" type="email" placeholder="Admin email" required>
+<input id="password" type="password" placeholder="Admin password" required>
+<button type="submit">Login as Admin</button>
+</form>
+</section>
+
+<section id="dashboard" hidden>
+<div class="cards">
+<div class="card">Products<strong id="totalProducts">0</strong></div>
+<div class="card">Orders<strong id="totalOrders">0</strong></div>
+<div class="card">Pending<strong id="pendingOrders">0</strong></div>
+<div class="card">Customers<strong id="totalCustomers">0</strong></div>
+</div>
+
+<div class="layout">
+<section class="panel">
+<h2 id="formTitle">➕ Add Product</h2>
+<form id="productForm">
+<input id="productName" name="name" placeholder="Product name" maxlength="120" required>
+<textarea id="description" name="description" placeholder="Product description" maxlength="2000" required></textarea>
+<label for="category">Product category</label>
+<select id="category" name="category" required>
+<option value="Mobile">Mobile Phones</option>
+<option value="Laptop">Laptop</option>
+<option value="Computer">Computer</option>
+<option value="Tablet">Tablet</option>
+<option value="Others">Others</option>
+</select>
+<input id="price" name="price" type="number" min="0.01" step="0.01" placeholder="Price (₹)" required>
+<input id="stock" name="stock" type="number" min="0" step="1" value="1" placeholder="Available quantity" required>
+<label for="discountPercent">Discount (%) — enter 0 to 90</label>
+<input id="discountPercent" name="discountPercent" type="number" min="0" max="90" step="0.01" value="0" placeholder="Discount percentage" required>
+<label for="photo">Product photo (JPG, PNG or WebP, max 3 MB)</label>
+<input id="photo" name="image" type="file" accept="image/jpeg,image/png,image/webp">
+<button id="saveProduct" type="submit">Add Product</button>
+<button id="cancelEdit" class="secondary" type="button" hidden>Cancel Edit</button>
+</form>
+</section>
+
+<section class="panel">
+<h2>📦 Customer Orders</h2>
+<button type="button" onclick="loadOrders()">Refresh Orders</button>
+<div id="orders"><p class="muted">Loading orders...</p></div>
+</section>
+</div>
+
+<section class="panel">
+<h2>🛍️ Manage Products</h2>
+<button type="button" onclick="loadProducts()">Refresh Products</button>
+<div id="products"><p class="muted">Loading products...</p></div>
+</section>
+
+<button id="logout" class="secondary" type="button">Logout</button>
+</section>
+</main>
+
+<script>
+const $ = id => document.getElementById(id);
+let editingId = null;
+
+function notify(message, error=false){
+  const box=$("notice");
+  box.textContent=message;
+  box.style.display="block";
+  box.style.background=error?"#fee2e2":"#dcfce7";
+  box.style.color=error?"#991b1b":"#166534";
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+async function api(url,options={}){
+  const response=await fetch(url,{credentials:"same-origin",...options});
+  const data=await response.json().catch(()=>({message:"Unexpected server response."}));
+  if(!response.ok) throw new Error(data.message || "Request failed.");
+  return data;
+}
+async function checkAdmin(){
+  try{
+    const user=await api("/api/me");
+    if(user.role!=="admin") throw new Error("This account is not an administrator.");
+    $("loginBox").hidden=true;
+    $("dashboard").hidden=false;
+    await refreshAll();
+  }catch(e){
+    $("dashboard").hidden=true;
+    $("loginBox").hidden=false;
+    notify(e.message,true);
+  }
+}
+$("loginForm").addEventListener("submit",async e=>{
+  e.preventDefault();
+  try{
+    const result=await api("/api/login",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({email:$("email").value,password:$("password").value})
+    });
+    if(result.user.role!=="admin"){
+      await api("/api/logout",{method:"POST"});
+      throw new Error("This account does not have admin permission.");
+    }
+    $("password").value="";
+    notify("Admin login successful!");
+    await checkAdmin();
+  }catch(err){notify(err.message,true);}
+});
+
+async function refreshAll(){
+  await Promise.all([loadStats(),loadProducts(),loadOrders()]);
+}
+async function loadStats(){
+  try{
+    const s=await api("/api/admin/stats");
+    $("totalProducts").textContent=s.totalProducts;
+    $("totalOrders").textContent=s.totalOrders;
+    $("pendingOrders").textContent=s.pendingOrders;
+    $("totalCustomers").textContent=s.totalCustomers;
+  }catch(e){notify(e.message,true);}
+}
+async function loadProducts(){
+  try{
+    const products=await api("/api/products");
+    const box=$("products");
+    box.replaceChildren();
+    if(!products.length){box.textContent="No products added yet.";return;}
+    products.forEach(p=>{
+      const item=document.createElement("div");
+      item.className="item";
+      const img=document.createElement("img");
+      img.src=p.image;img.alt=p.name;img.loading="lazy";
+      const title=document.createElement("h3");title.textContent=p.name;
+      const desc=document.createElement("p");desc.textContent=p.description;
+      const category=document.createElement("p");
+      category.textContent="Category: "+(p.category || "Others");
+      const price=document.createElement("p");
+      const originalPrice=Number(p.price);
+      const discount=Math.min(90,Math.max(0,Number(p.discountPercent)||0));
+      const salePrice=Number((originalPrice*(1-discount/100)).toFixed(2));
+      price.textContent=discount>0
+        ? "Original: ₹"+originalPrice.toFixed(2)+" | Discount: "+discount+"% | Sale: ₹"+salePrice.toFixed(2)+" | Stock: "+p.stock
+        : "Price: ₹"+originalPrice.toFixed(2)+" | No discount | Stock: "+p.stock;
+      const edit=document.createElement("button");edit.textContent="Edit Product";
+      edit.onclick=()=>startEdit(p);
+      const del=document.createElement("button");del.textContent="Delete Product";del.className="danger";
+      del.onclick=()=>deleteProduct(p.id);
+      item.append(img,title,desc,category,price,edit,del);box.append(item);
+    });
+  }catch(e){notify(e.message,true);}
+}
+function startEdit(p){
+  editingId=p.id;
+  $("formTitle").textContent="✏️ Edit Product #"+p.id;
+  $("productName").value=p.name;
+  $("description").value=p.description;
+  $("category").value=p.category || "Others";
+  $("price").value=p.price;
+  $("stock").value=p.stock;
+  $("discountPercent").value=Number(p.discountPercent || 0);
+  $("photo").required=false;
+  $("saveProduct").textContent="Save Changes";
+  $("cancelEdit").hidden=false;
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function resetForm(){
+  editingId=null;
+  $("productForm").reset();
+  $("category").value="Others";
+  $("stock").value=1;
+  $("discountPercent").value=0;
+  $("photo").required=false;
+  $("formTitle").textContent="➕ Add Product";
+  $("saveProduct").textContent="Add Product";
+  $("cancelEdit").hidden=true;
+}
+$("cancelEdit").addEventListener("click",resetForm);
+$("productForm").addEventListener("submit",async e=>{
+  e.preventDefault();
+  try{
+    const form=new FormData();
+    form.append("name",$("productName").value);
+    form.append("description",$("description").value);
+    form.append("category",$("category").value);
+    form.append("price",$("price").value);
+    form.append("stock",$("stock").value);
+    form.append("discountPercent",$("discountPercent").value);
+    if($("photo").files[0]) form.append("image",$("photo").files[0]);
+    if(!editingId && !$("photo").files[0]) throw new Error("Please select a product photo.");
+    await api(editingId?"/api/admin/products/"+editingId:"/api/admin/products",{
+      method:editingId?"PUT":"POST",body:form
+    });
+    notify(editingId?"Product updated!":"Product added!");
+    resetForm();
+    await loadProducts();await loadStats();
+  }catch(err){notify(err.message,true);}
+});
+async function deleteProduct(id){
+  if(!confirm("Delete this product?")) return;
+  try{
+    const result=await api("/api/admin/products/"+id,{method:"DELETE"});
+    notify(result.message);await loadProducts();await loadStats();
+  }catch(e){notify(e.message,true);}
+}
+async function loadOrders(){
+  try{
+    const orders=await api("/api/admin/orders");
+    const box=$("orders");box.replaceChildren();
+    if(!orders.length){box.textContent="No customer orders yet.";return;}
+    orders.slice().reverse().forEach(o=>{
+      const item=document.createElement("div");item.className="item";
+      const title=document.createElement("h3");title.textContent="Order #"+o.id+" — "+o.productName;
+      const details=document.createElement("p");
+      details.textContent="Customer: "+o.customerName+" | "+o.email+
+        " | Phone: "+o.phone+" | Quantity: "+o.quantity+
+        " | Total: ₹"+o.total+" | Payment: "+o.paymentMethod;
+      const address=document.createElement("p");address.textContent="Address: "+o.address;
+      const status=document.createElement("p");status.textContent="Current status: "+o.status;
+      const select=document.createElement("select");
+      ["Pending","Confirmed","Shipped","Delivered","Cancelled"].forEach(s=>{
+        const option=document.createElement("option");option.value=s;option.textContent=s;
+        if(s===o.status) option.selected=true;select.append(option);
+      });
+      const update=document.createElement("button");update.textContent="Update Status";
+      update.onclick=async()=>{
+        try{
+          const r=await api("/api/admin/orders/"+o.id,{
+            method:"PATCH",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify({status:select.value})
+          });
+          notify(r.message);await loadOrders();await loadStats();
+        }catch(e){notify(e.message,true);}
+      };
+      item.append(title,details,address,status,select,update);box.append(item);
+    });
+  }catch(e){notify(e.message,true);}
+}
+$("logout").addEventListener("click",async()=>{
+  try{await api("/api/logout",{method:"POST"});location.reload();}
+  catch(e){notify(e.message,true);}
+});
+checkAdmin();
+</script>
+</body>
+</html>
+EOF
