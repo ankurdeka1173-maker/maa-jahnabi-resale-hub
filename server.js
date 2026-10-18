@@ -29,6 +29,7 @@ if (!process.env.ADMIN_EMAIL || !process.env.ADMIN_PASSWORD) {
 
 // Security headers. CSP will be configured separately after frontend testing.
 app.disable("x-powered-by");
+app.set("trust proxy", 1);
 app.use(helmet({ contentSecurityPolicy: false }));
 
 app.use(express.urlencoded({ extended: false }));
