@@ -21,6 +21,10 @@ button.danger{background:#dc2626}
 button.secondary{background:#475569}
 .item{border:1px solid #e5e7eb;border-radius:10px;padding:12px;margin:10px 0;overflow-wrap:anywhere}
 .item img{width:100%;max-width:180px;height:140px;object-fit:cover;border-radius:8px;display:block}
+.status-badge{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:999px;font-weight:700;font-size:13px}
+.status-badge.delivered{background:#dcfce7;color:#166534;border:1px solid #86efac}
+.status-badge.delivered .status-icon{font-size:16px}
+
 .muted{color:#64748b;font-size:13px}
 #notice{padding:12px;border-radius:8px;margin-bottom:12px;display:none}
 @media(min-width:700px){.cards{grid-template-columns:repeat(4,1fr)}.layout{display:grid;grid-template-columns:1fr 1fr;gap:16px}}
@@ -252,7 +256,20 @@ async function loadOrders(){
         " | Phone: "+o.phone+" | Quantity: "+o.quantity+
         " | Total: ₹"+o.total+" | Payment: "+o.paymentMethod;
       const address=document.createElement("p");address.textContent="Address: "+o.address;
-      const status=document.createElement("p");status.textContent="Current status: "+o.status;
+      const status=document.createElement("p");
+      status.textContent="Current status: ";
+      if(o.status==="Delivered"){
+        const badge=document.createElement("span");
+        badge.className="status-badge delivered";
+        const icon=document.createElement("span");
+        icon.className="status-icon";
+        icon.textContent="✓";
+        icon.setAttribute("aria-hidden","true");
+        badge.append(icon,document.createTextNode(" Delivered"));
+        status.append(badge);
+      }else{
+        status.append(document.createTextNode(o.status));
+      }
       const select=document.createElement("select");
       ["Pending","Confirmed","Shipped","Delivered","Cancelled"].forEach(s=>{
         const option=document.createElement("option");option.value=s;option.textContent=s;
