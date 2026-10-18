@@ -43,6 +43,14 @@ const loginLimiter = rateLimit({
     message: { message: "Too many login attempts. Please try again in 15 minutes." }
 });
 
+const supportLimiter = rateLimit({
+    windowMs: 60 * 60 * 1000,
+    limit: 5,
+    standardHeaders: "draft-8",
+    legacyHeaders: false,
+    message: { message: "Too many support messages. Please try again later." }
+});
+
 const registerLimiter = rateLimit({
     windowMs: 60 * 60 * 1000,
     limit: 5,
@@ -338,6 +346,47 @@ app.post("/api/login", loginLimiter, async (req, res) => {
     } catch (error) {
         console.error("Login error:", error.message);
         return res.status(500).json({ message: "Server error." });
+    }
+});
+
+/* CUSTOMER SUPPORT CONTACT FORM */
+
+app.post("/api/support", supportLimiter, requireLogin, async (req, res) => {
+    try {
+        const user = req.session.user;
+
+        if (user.role !== "customer" || !Number.isInteger(Number(user.id))) {
+            return res.status(403).json({
+                message: "Customer account required."
+            });
+        }
+
+        const subject = String(req.body.subject || "").trim();
+        const message = String(req.body.message || "").trim();
+
+        if (subject.length < 3 || subject.length > 120 ||
+            message.length < 10 || message.length > 3000) {
+            return res.status(400).json({
+                message: "Subject must be 3–120 characters and message 10–3000 characters."
+            });
+        }
+
+        await pool.query(
+            `INSERT INTO support_messages
+                (user_id, customer_name, customer_email, subject, message)
+             VALUES ($1, $2, $3, $4, $5)`,
+            [Number(user.id), String(user.username || "Customer").slice(0, 60),
+             String(user.email || "").slice(0, 254), subject, message]
+        );
+
+        return res.status(201).json({
+            message: "Your support message was sent successfully."
+        });
+    } catch (error) {
+        console.error("Support message error:", error.message);
+        return res.status(500).json({
+            message: "Could not send your support message. Please try again later."
+        });
     }
 });
 

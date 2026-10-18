@@ -360,6 +360,29 @@ footer{
     </aside>
 
     <section>
+
+      <div class="card" id="supportPanel" hidden>
+        <h2>💬 Help &amp; Support</h2>
+        <p style="color:#68758b;line-height:1.6;font-size:14px">
+          Need help with an order or product? Contact us on WhatsApp or send a message below.
+        </p>
+        <a class="btn" href="https://wa.me/917637023840?text=Hello%20MAA%20JAHNABI%20RESALE%20HUB%2C%20I%20need%20support." target="_blank" rel="noopener noreferrer">
+          Chat on WhatsApp
+        </a>
+        <hr style="border:0;border-top:1px solid #e4eaf2;margin:20px 0">
+        <form id="supportForm">
+          <label for="supportSubject" style="display:block;font-size:13px;font-weight:700;margin:12px 0 6px">Subject</label>
+          <input id="supportSubject" name="subject" required minlength="3" maxlength="120"
+            style="width:100%;padding:12px;border:1px solid #d7dfeb;border-radius:9px;font:inherit">
+          <label for="supportMessage" style="display:block;font-size:13px;font-weight:700;margin:12px 0 6px">Your message</label>
+          <textarea id="supportMessage" name="message" required minlength="10" maxlength="3000" rows="5"
+            style="width:100%;padding:12px;border:1px solid #d7dfeb;border-radius:9px;font:inherit;resize:vertical"></textarea>
+          <p id="supportFormStatus" role="status" aria-live="polite" style="font-size:13px;color:#68758b"></p>
+          <button type="submit" id="sendSupport">Send Message</button>
+          <button type="button" class="secondary" id="closeSupport">Close</button>
+        </form>
+      </div>
+
       <div class="card" id="myOrders">
         <div class="section-title">
           <h2>📦 My Orders</h2>
@@ -722,11 +745,40 @@ async function loadOrders() {
 }
 
 $("supportLink").addEventListener("click", () => {
-  showNotice(
-    "Support contact is not configured yet. Please check the store website for published contact details. For an order issue, keep your order number handy.",
-    true
-  );
-  $("myOrders").scrollIntoView({ behavior: "smooth", block: "start" });
+  const panel = $("supportPanel");
+  panel.hidden = false;
+  panel.scrollIntoView({ behavior: "smooth", block: "start" });
+});
+
+$("closeSupport").addEventListener("click", () => {
+  $("supportPanel").hidden = true;
+});
+
+$("supportForm").addEventListener("submit", async event => {
+  event.preventDefault();
+
+  const button = $("sendSupport");
+  const status = $("supportFormStatus");
+  button.disabled = true;
+  status.textContent = "Sending message...";
+
+  try {
+    const result = await api("/api/support", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        subject: $("supportSubject").value,
+        message: $("supportMessage").value
+      })
+    });
+
+    status.textContent = result.message || "Message sent successfully.";
+    $("supportForm").reset();
+  } catch (error) {
+    status.textContent = error.message || "Could not send your message.";
+  } finally {
+    button.disabled = false;
+  }
 });
 
 $("refresh").addEventListener("click", async () => {
